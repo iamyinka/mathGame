@@ -137,7 +137,7 @@ html {
 	padding-right: 10px;
 	position: absolute;
 	bottom: 10px;
-	right: 97px;
+	right: 15px;
 	border-radius: 5px;
 	box-shadow: 1px 5px 0 rgba(0, 0, 0, .3);
 	font-family: "vertical", sans-serif;
@@ -154,7 +154,7 @@ html {
 	top: 120px;
 	left: 80px;
 	color: #fff;
-	/*display: none;*/
+	display: none;
 }
 
 #gameOver p {
