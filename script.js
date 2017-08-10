@@ -27,11 +27,8 @@ Onclick answers
 
 
 var playing = false;
-var score, action, timeRemainder;
-var first = Math.round(Math.random() * 11);
-var second = Math.round(Math.random() * 11);
+var score, action, timeRemainder, result, x, y;
 var operator = "x";
-var result;
 var gameStart = document.getElementById('start');
 
 gameStart.onclick = function gameStarted() {
@@ -50,13 +47,39 @@ gameStart.onclick = function gameStarted() {
 		
 		startCountdown(); // Start Countdown
 		
-//		Generate Q & A
-		result = generateQnA(first, second);
-		
-		document.getElementById("game-board").innerHTML = "<p>" + first + " " + operator + " " + second;
-		
+//		Generate Q & A		
+		generateQnA();
 	}
 };
+
+
+//Click on answer boxes
+
+for(i = 1; i < 5; i++) {
+	document.getElementById("answer" + i).onclick = function() {
+//	Check if playing
+		if(playing) {
+			if(this.innerHTML == result) {
+				score ++;
+				document.getElementById("scoreValue").innerHTML = score;
+
+				show("correct");
+				hide("wrong");
+				setTimeout(function() {
+					hide("correct");
+				},1000);
+				generateQnA();
+			} 
+			else {
+				show("wrong");
+				hide("correct");
+				setTimeout(function() {
+					hide("wrong");
+				},1000);
+			}
+		}
+	}
+}
 
 
 
@@ -98,6 +121,27 @@ function show(id) {
 }
 
 //		Generate Q & A
-function generateQnA(first, second) {
-	return first * second
+function generateQnA() {
+	var x = 1 + Math.round(Math.random() * 9);
+	var y = 1 + Math.round(Math.random() * 9);
+	result = x * y;
+	
+	document.getElementById("game-board").innerHTML = "<p>" + x + " " + operator + " " + y + "</p>";
+	
+	var correctPosition = 1 + Math.round(Math.random() * 3);
+	document.getElementById("answer" + correctPosition).innerHTML = "<p>" + result + "</p>";
+	
+//	fill other boxes with wrong answers
+	var answers = [result];
+	
+	for(var i = 1; i < 5; i++ ) {
+		if(i != correctPosition) {
+			var wrongAnswer;
+			do {
+				wrongAnswer = (1 + Math.round(Math.random() * 9)) * (1 + Math.round(Math.random() * 9));
+			} while (answers.indexOf(wrongAnswer) > -1)
+			document.getElementById("answer" + i).innerHTML = "<p>" + wrongAnswer + "</p>";
+			answers.push(wrongAnswer);
+		}
+	}
 }

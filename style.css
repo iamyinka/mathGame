@@ -35,6 +35,8 @@ html {
 	line-height: 50px;
 	margin: 0 auto;
 	display: none;
+	position: absolute;
+	left: 40%;
 }
 
 #correct {
